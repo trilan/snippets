@@ -20,8 +20,8 @@ class TokenSplitterTests(TestCase):
         return lexer.get_tokens(source)
 
     def test_handles_single_line_comments(self):
-        comment, source = split(self.get_tokens('python.py'))
-        self.assertEqual(tuple(comment), (
+        comments, source = split(self.get_tokens('python.py'))
+        self.assertEqual(tuple(comments), (
             (Comment, u'# This is a header comment'), (Text, u'\n'),
             (Comment, u'# splitted into two lines.'), (Text, u'\n'),
             (Text, u'\n'), (Comment, u'# Hello!'), (Text, u'\n'),
@@ -32,8 +32,8 @@ class TokenSplitterTests(TestCase):
         ))
 
     def test_handles_multi_line_comments(self):
-        comment, source = split(self.get_tokens('style.css'))
-        self.assertEqual(tuple(comment), (
+        comments, source = split(self.get_tokens('style.css'))
+        self.assertEqual(tuple(comments), (
             (Comment, u'/*\n * !tags: base\n */'), (Text, u'\n\n'),
         ))
         self.assertEqual(tuple(source), (
