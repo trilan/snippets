@@ -10,6 +10,9 @@ setup(
     author='Mike Yumatov',
     author_email='mike@yumatov.org',
     packages=find_packages(),
+    install_requires=[
+        'Pygments',
+    ],
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Console',
