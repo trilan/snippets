@@ -11,7 +11,7 @@ DATE_FORMATS = (
 )
 
 
-class ContentMetadata(object):
+class SnippetMetadata(object):
 
     def __init__(self, raw_metadata):
         self.raw_metadata = raw_metadata
@@ -42,10 +42,10 @@ class ContentMetadata(object):
             raise AttributeError
 
 
-class Content(object):
+class Snippet(object):
 
     def __init__(self, raw_metadata, tokens):
-        self.metadata = ContentMetadata(raw_metadata)
+        self.metadata = SnippetMetadata(raw_metadata)
         self.tokens = tokens
 
     def _get_formatter(self):
