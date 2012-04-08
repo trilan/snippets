@@ -14,6 +14,11 @@ setup(
         'Pygments',
         'Jinja2',
     ],
+    entry_points={
+        'console_scripts': [
+            'snippets = snippets.__main__:run',
+        ],
+    },
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Console',
