@@ -12,6 +12,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'Pygments',
+        'Jinja2',
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
