@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from pygments import format
@@ -49,23 +50,32 @@ class SnippetMetadata(object):
 
 class Snippet(object):
 
-    def __init__(self, raw_metadata, tokens):
+    def __init__(self, filepath, raw_metadata, tokens):
+        self.filepath = filepath
+        self.filename = os.path.basename(filepath)
         self.metadata = SnippetMetadata(raw_metadata)
         self.tokens = tokens
 
     @classmethod
-    def from_source(cls, source, lexer):
+    def from_source(cls, filepath, source):
+        lexer = get_lexer_for_filename(filepath)
         tokens = lexer.get_tokens(source)
         comments, tokens = split(tokens)
         raw_metadata, comments = parse_metadata(comments)
-        return cls(raw_metadata, tuple(comments) + tuple(tokens))
+        return cls(filepath, raw_metadata, tuple(comments) + tuple(tokens))
 
     @classmethod
     def from_filepath(cls, filepath):
-        return cls.from_source(read(filepath), get_lexer_for_filename(filepath))
+        return cls.from_source(filepath, read(filepath))
 
     def _get_formatter(self):
         return HtmlFormatter()
+
+    def get_relpath(self):
+        return '{date:%Y}/{date:%m}/{slug}.html'.format(
+            date=self.metadata.date,
+            slug=getattr(self.metadata, 'slug', self.filename),
+        )
 
     def get_formatted_source(self):
         return format(self.tokens, self._get_formatter())
