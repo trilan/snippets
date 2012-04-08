@@ -1,6 +1,9 @@
 import mock
 from datetime import datetime
+
 from pygments.formatters import HtmlFormatter
+from pygments.lexers import PythonLexer
+
 from unittest2 import TestCase
 from snippets.snippet import Snippet
 
@@ -37,3 +40,12 @@ class SnippetTests(TestCase):
     def test_get_formatter(self):
         snippet = Snippet({}, mock.sentinel.tokens)
         self.assertIsInstance(snippet._get_formatter(), HtmlFormatter)
+
+    @mock.patch('snippets.snippet.read')
+    @mock.patch('snippets.snippet.get_lexer_for_filename')
+    @mock.patch('snippets.snippet.Snippet.from_source')
+    def test_from_filepath(self, from_source, get_lexer_for_filename, read):
+        Snippet.from_filepath('snippets/example.py')
+        read.assert_called_once_with('snippets/example.py')
+        get_lexer_for_filename.assert_called_once_with('snippets/example.py')
+        from_source.assert_called_once_with(read.return_value, get_lexer_for_filename.return_value)

@@ -2,6 +2,11 @@ from datetime import datetime
 
 from pygments import format
 from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_for_filename
+
+from .metadata_parser import parse_metadata
+from .token_splitter import split
+from .utils import read
 
 
 DATE_FORMATS = (
@@ -47,6 +52,17 @@ class Snippet(object):
     def __init__(self, raw_metadata, tokens):
         self.metadata = SnippetMetadata(raw_metadata)
         self.tokens = tokens
+
+    @classmethod
+    def from_source(cls, source, lexer):
+        tokens = lexer.get_tokens(source)
+        comments, tokens = split(tokens)
+        raw_metadata, comments = parse_metadata(comments)
+        return cls(raw_metadata, tuple(comments) + tuple(tokens))
+
+    @classmethod
+    def from_filepath(cls, filepath):
+        return cls.from_source(read(filepath), get_lexer_for_filename(filepath))
 
     def _get_formatter(self):
         return HtmlFormatter()
