@@ -20,7 +20,15 @@ class Generator(object):
         return self._render_template('index.html', {'snippets': snippets})
 
     def render_snippet(self, snippet):
-        return self._render_template('snippet.html', {'snippet': snippet})
+        tags = []
+        for tagname in snippet.metadata.tags:
+            tags.append(self.repository.tags[tagname.lower()])
+        return self._render_template('snippet.html', {'snippet': snippet, 'tags': tags})
+
+    def render_tag(self, tag):
+        snippets = list(tag)
+        snippets.sort(key=lambda s: s.metadata.date, reverse=True)
+        return self._render_template('tag.html', {'tag': tag, 'snippets': snippets})
 
     def write(self, filepath, content):
         try:
@@ -36,3 +44,6 @@ class Generator(object):
         for snippet in self.repository.values():
             filepath = os.path.join(output, snippet.get_relpath())
             self.write(filepath, self.render_snippet(snippet))
+        for tag in self.repository.tags.values():
+            filepath = os.path.join(output, tag.get_relpath())
+            self.write(filepath, self.render_tag(tag))
