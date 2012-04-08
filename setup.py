@@ -1,4 +1,10 @@
+import sys
 from setuptools import setup, find_packages
+
+
+requirements = ['Pygments', 'Jinja2']
+if sys.version_info < (2, 7):
+    requirements.append('argparse')
 
 
 setup(
@@ -10,10 +16,7 @@ setup(
     author='Mike Yumatov',
     author_email='mike@yumatov.org',
     packages=find_packages(),
-    install_requires=[
-        'Pygments',
-        'Jinja2',
-    ],
+    install_requires=requirements,
     entry_points={
         'console_scripts': [
             'snippets = snippets.__main__:run',
