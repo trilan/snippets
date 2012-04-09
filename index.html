@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Snippets by trilan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Snippets</h1>
+<p>Code snippets repository generator</p>
+        <p class="view"><a href="https://github.com/trilan/snippets">View the Project on GitHub <small>trilan/snippets</small></a></p>
+        <ul>
+          <li><a href="https://github.com/trilan/snippets/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/trilan/snippets/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/trilan/snippets">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Snippets is a code snippets static repository generator. It is like
+Jekyll/Pelican/etc. for blog, but for code snippets.</p>
+
+<ul>
+<li>Write code snippets with your favorite editor in plain text.</li>
+<li>Moderate snippets using pull requests and awesome GitHub's code
+review features.</li>
+<li>Generate site using only one command.</li>
+<li>Highlight code with <a href="http://pygments.org">Pygments</a>.</li>
+<li>Theme site with <a href="http://jinja.pocoo.org">Jinja2</a>.</li>
+</ul><h2>Usage</h2>
+
+<ol>
+<li>
+<p>Create directory with code snippets. For example:</p>
+
+<pre><code>snippets/
+  example.py
+  example.js
+</code></pre>
+
+<p>And <code>example.py</code> is like:</p>
+
+<pre><code># !title: How to print `Hello, World!` in Python
+# !date: 2012-04-01
+# !tags: Python, hello
+
+print 'Hello, World!'
+</code></pre>
+
+<p>When <code>example.js</code> is like:</p>
+
+<pre><code>/*
+ * !title: How to print `Hello, World!` in JavaScript
+ * !date: 2012-04-01
+ * !tags: JavaScript, hello
+ */
+
+console.log("Hello, World!");
+</code></pre>
+
+<p>You can write some metadata in header comments to use it in templates. Every
+metadata param must begin with bang (<code>!</code>) and must contain key and value.
+All metadata params are optional, except <code>title</code> and <code>date</code>.</p>
+</li>
+<li><p>Create a theme for your site. Theme is a directory with three Jinja
+templates (<code>index.html</code>, <code>snippet.html</code> and <code>tag.html</code>).</p></li>
+<li>
+<p>Run <code>snippets</code> command for this directory:</p>
+
+<pre><code>$ snippets -s snippets -o output -t theme
+</code></pre>
+</li>
+<li><p>Open <code>output/index.html</code> in your browser or deploy whole <code>output</code>
+directory to the remote server.</p></li>
+</ol><h2>Installation</h2>
+
+<p>While there is no stable release of Snippets yet, you can install it from GitHub
+repository using pip:</p>
+
+<pre><code>    $ pip install -e git://github.com/trilan/snippets.git@develop#egg=snippets
+</code></pre>
+
+<h2>Example</h2>
+
+<p>See example repository <a href="https://github.com/trilan/snippets.trilandev.com">here</a>.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/trilan">trilan</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
