@@ -14,7 +14,9 @@ class GeteratorTests(TestCase):
         self.generator._render_template = self.render_template = mock.Mock()
 
     def test_render_snippet(self):
-        result = self.generator.render_snippet(mock.sentinel.snippet)
+        snippet = Snippet('snippets/example.py', {'date': '2012-04-01'}, ())
+        result = self.generator.render_snippet(snippet)
         self.render_template.assert_called_once_with('snippet.html', {
-            'snippet': mock.sentinel.snippet,
+            'snippet': snippet,
+            'tags': [],
         })
