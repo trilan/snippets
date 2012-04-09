@@ -1,5 +1,10 @@
+import os
 import sys
 from setuptools import setup, find_packages
+
+
+def read(filename):
+    return open(os.path.join(os.path.dirname(__file__), filename)).read()
 
 
 requirements = ['Pygments', 'Jinja2']
@@ -12,6 +17,7 @@ setup(
     version='0.0.dev',
     license='ISC',
     description='Code snippets repository generator',
+    long_description=read('README.rst'),
     url='https://github.com/trilan/snippets',
     author='Mike Yumatov',
     author_email='mike@yumatov.org',
