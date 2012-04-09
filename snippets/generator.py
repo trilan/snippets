@@ -2,6 +2,7 @@ import codecs
 import errno
 import os
 from jinja2 import Environment, FileSystemLoader
+from .paginator import Paginator
 
 
 class Generator(object):
@@ -14,10 +15,8 @@ class Generator(object):
         template = self.template_environment.get_template(name)
         return template.render(context)
 
-    def render_index(self):
-        snippets = self.repository.values()
-        snippets.sort(key=lambda s: s.metadata.date, reverse=True)
-        return self._render_template('index.html', {'snippets': snippets})
+    def render_index(self, page):
+        return self._render_template('index.html', {'page': page})
 
     def render_snippet(self, snippet):
         tags = []
@@ -40,10 +39,17 @@ class Generator(object):
             f.write(content)
 
     def generate(self, output):
-        self.write(os.path.join(output, 'index.html'), self.render_index())
-        for snippet in self.repository.values():
+        snippets = self.repository.values()
+        snippets.sort(key=lambda s: s.metadata.date, reverse=True)
+
+        for page in Paginator(snippets):
+            filepath = os.path.join(output, page.get_relpath())
+            self.write(filepath, self.render_index(page))
+
+        for snippet in snippets:
             filepath = os.path.join(output, snippet.get_relpath())
             self.write(filepath, self.render_snippet(snippet))
+
         for tag in self.repository.tags.values():
             filepath = os.path.join(output, tag.get_relpath())
             self.write(filepath, self.render_tag(tag))
