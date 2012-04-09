@@ -23,7 +23,7 @@ def parse_metadata(tokens):
     metadata = {}
     is_significant = True
     for token in tokens:
-        if token[0] is Comment:
+        if token[0] in (Comment, Comment.Multiline, Comment.Single):
             comment_metadata = parse_comment_metadata(token[1])
             is_significant = not comment_metadata
             metadata.update(comment_metadata)
