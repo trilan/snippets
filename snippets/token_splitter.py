@@ -7,7 +7,8 @@ def is_token_match(token):
     it contains a comment or only whitespace characters.
     """
     type, value = token
-    return type is Comment or type is Text and (not value or value.isspace())
+    return (type in (Comment, Comment.Multiline, Comment.Single) or
+            type is Text and (not value or value.isspace()))
 
 
 def split(tokens):
