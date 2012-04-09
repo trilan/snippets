@@ -6,7 +6,8 @@ def is_token_match(token):
     """Check if provided token is a header token. Token is a header token, if
     it contains a comment or only whitespace characters.
     """
-    return token[0] is Comment or token[0] is Text and token[1].isspace()
+    type, value = token
+    return type is Comment or type is Text and (not value or value.isspace())
 
 
 def split(tokens):

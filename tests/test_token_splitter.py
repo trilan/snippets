@@ -44,3 +44,8 @@ class TokenSplitterTests(TestCase):
             (Text, u' '), (Number, u'0'), (Punctuation, u';'), (Text, u'\n'),
             (Punctuation, u'}'), (Text, u'\n'),
         ))
+
+    def test_handles_empty_text_tokens(self):
+        comments, source = split(((Text, u''), (Comment, u'// comment')))
+        self.assertEqual(tuple(comments), ((Text, u''), (Comment, u'// comment')))
+        self.assertEqual(tuple(source), ())
