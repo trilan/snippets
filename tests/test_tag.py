@@ -12,6 +12,10 @@ class TagTests(TestCase):
         self.assertIs(Tag('Django'), Tag('Django'))
         self.assertIs(Tag('Django'), Tag('django'))
 
+    def test_first_tag_tag_name_is_saved(self):
+        Tag('Django')
+        self.assertEqual(Tag('django').name, 'Django')
+
     def test_saves_snippets_between_objects(self):
         tag = Tag('Django')
         tag.add(mock.sentinel.snippet1)
