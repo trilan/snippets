@@ -31,6 +31,10 @@ class TokenSplitterTests(TestCase):
             (String, u'Hello, World!'), (String, u"'"), (Text, u'\n'),
         ))
 
+        comments, source = split(((Comment.Single, u'// comment'),))
+        self.assertEqual(tuple(comments), ((Comment.Single, u'// comment'),))
+        self.assertEqual(tuple(source), ())
+
     def test_handles_multi_line_comments(self):
         comments, source = split(self.get_tokens('style.css'))
         self.assertEqual(tuple(comments), (
@@ -44,3 +48,12 @@ class TokenSplitterTests(TestCase):
             (Text, u' '), (Number, u'0'), (Punctuation, u';'), (Text, u'\n'),
             (Punctuation, u'}'), (Text, u'\n'),
         ))
+
+        comments, source = split(((Comment.Multiline, u'/* */'),))
+        self.assertEqual(tuple(comments), ((Comment.Multiline, u'/* */'),))
+        self.assertEqual(tuple(source), ())
+
+    def test_handles_empty_text_tokens(self):
+        comments, source = split(((Text, u''), (Comment, u'// comment')))
+        self.assertEqual(tuple(comments), ((Text, u''), (Comment, u'// comment')))
+        self.assertEqual(tuple(source), ())
