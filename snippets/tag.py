@@ -1,4 +1,4 @@
-class Tag(set):
+class Tag(object):
     """Represents a snippets tag. Tags with the same slug are the same objects.
     So, e.g., tags with names ``Django``, ``django`` and ``DJANGO`` will share
     the same set of snippets.
@@ -17,7 +17,6 @@ class Tag(set):
         if slug not in self.registry:
             self.name = name
             self.slug = slug
-            super(Tag, self).__init__()
             self.registry[slug] = self
 
     def __unicode__(self):

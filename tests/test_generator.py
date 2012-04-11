@@ -16,7 +16,4 @@ class GeteratorTests(TestCase):
     def test_render_snippet(self):
         snippet = Snippet('snippets/example.py', {'date': '2012-04-01'}, ())
         result = self.generator.render_snippet(snippet)
-        self.render_template.assert_called_once_with('snippet.html', {
-            'snippet': snippet,
-            'tags': [],
-        })
+        self.render_template.assert_called_once_with('snippet.html', {'snippet': snippet})

@@ -9,7 +9,7 @@ class Repository(collections.Mapping):
 
     def __init__(self):
         self._snippets = {}
-        self.tags = {}
+        self.tags = collections.defaultdict(set)
 
     def __getitem__(self, path):
         return self._snippets[path]
@@ -23,11 +23,8 @@ class Repository(collections.Mapping):
     def add_filepath(self, filepath):
         snippet = Snippet.from_filepath(filepath)
         self._snippets[filepath] = snippet
-        for tagname in snippet.metadata.tags:
-            tagslug = tagname.lower()
-            if tagslug not in self.tags:
-                self.tags[tagslug] = Tag(tagname)
-            self.tags[tagslug].add(snippet)
+        for tag in snippet.metadata.tags:
+            self.tags[tag].add(snippet)
 
     def add_repopath(self, repopath):
         for filepath in find(repopath):

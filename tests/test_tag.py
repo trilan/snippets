@@ -1,4 +1,3 @@
-import mock
 from unittest2 import TestCase
 from snippets.tag import Tag
 
@@ -15,12 +14,6 @@ class TagTests(TestCase):
     def test_first_tag_tag_name_is_saved(self):
         Tag('Django')
         self.assertEqual(Tag('django').name, 'Django')
-
-    def test_saves_snippets_between_objects(self):
-        tag = Tag('Django')
-        tag.add(mock.sentinel.snippet1)
-        tag.add(mock.sentinel.snippet2)
-        self.assertItemsEqual(Tag('django'), [mock.sentinel.snippet1, mock.sentinel.snippet2])
 
     def test_relpath(self):
         self.assertEqual(Tag('Django').get_relpath(), 'tags/django.html')
