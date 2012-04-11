@@ -6,6 +6,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_for_filename
 
 from .metadata_parser import parse_metadata
+from .tag import Tag
 from .token_splitter import split
 from .utils import read
 
@@ -27,7 +28,7 @@ class SnippetMetadata(object):
         tags = self.raw_metadata.get('tags', '').strip()
         if not tags:
             return ()
-        return tuple(tag.strip() for tag in tags.split(','))
+        return tuple(Tag(tag.strip()) for tag in tags.split(','))
 
     @property
     def date(self):

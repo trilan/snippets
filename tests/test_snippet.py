@@ -5,6 +5,8 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 
 from unittest2 import TestCase
+
+from snippets.tag import Tag
 from snippets.snippet import Snippet
 
 
@@ -15,7 +17,7 @@ class SnippetMetadataTests(TestCase):
             snippet = Snippet('snippets/example.py', raw_metadata, ())
             self.assertEqual(snippet.metadata.tags, result)
 
-        check({'tags': 'models, admin'}, ('models', 'admin'))
+        check({'tags': 'models, admin'}, (Tag('models'), Tag('admin')))
         check({}, ())
 
     def test_has_processed_date(self):
