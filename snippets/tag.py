@@ -20,6 +20,9 @@ class Tag(set):
             super(Tag, self).__init__()
             self.registry[slug] = self
 
+    def __unicode__(self):
+        return self.name
+
     def __repr__(self):
         return u'<Tag %s>' % self.name
 

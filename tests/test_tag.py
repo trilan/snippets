@@ -20,3 +20,6 @@ class TagTests(TestCase):
 
     def test_relpath(self):
         self.assertEqual(Tag('Django').get_relpath(), 'tags/django.html')
+
+    def test_converts_to_unicode(self):
+        self.assertEqual(unicode(Tag('Django')), u'Django')
