@@ -1,6 +1,7 @@
 import codecs
 import errno
 import os
+import shutil
 from jinja2 import Environment, FileSystemLoader
 from .paginator import Paginator
 
@@ -9,6 +10,7 @@ class Generator(object):
 
     def __init__(self, repository, theme):
         self.repository = repository
+        self.theme = theme
         self.template_environment = Environment(loader=FileSystemLoader(theme))
 
     def _render_template(self, name, context):
@@ -35,9 +37,19 @@ class Generator(object):
         with codecs.open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
+    def copy_static(self, output):
+        source = os.path.join(self.theme, 'static')
+        target = os.path.join(output, 'static')
+        if os.path.isdir(source):
+            if os.path.exists(target):
+                shutil.rmtree(target)
+            shutil.copytree(source, target)
+
     def generate(self, output):
         snippets = self.repository.values()
         snippets.sort(key=lambda s: s.metadata.date, reverse=True)
+
+        self.copy_static(output)
 
         for page in Paginator(snippets):
             filepath = os.path.join(output, page.get_relpath())
