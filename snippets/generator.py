@@ -11,7 +11,9 @@ class Generator(object):
     def __init__(self, repository, theme):
         self.repository = repository
         self.theme = theme
-        self.template_environment = Environment(loader=FileSystemLoader(theme))
+        self.template_environment = Environment(
+            loader=FileSystemLoader(os.path.join(theme, 'templates')),
+        )
 
     def _render_template(self, name, context):
         template = self.template_environment.get_template(name)
