@@ -1,4 +1,6 @@
 DEFAULT_SETTINGS = {
+    'SITE_NAME': 'Code Snippets',
+    'SITE_URL': '',
     'REPOSITORY_PATH': 'snippets',
     'OUTPUT_PATH': 'output',
 }
