@@ -28,7 +28,7 @@ def run(args=sys.argv[1:]):
 
     repository = Repository()
     repository.add_repopath(settings['REPOSITORY_PATH'])
-    generator = Generator(repository, settings['THEME'])
+    generator = Generator(repository, settings['THEME'], settings.copy())
     generator.generate(settings['OUTPUT_PATH'])
 
 

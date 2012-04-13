@@ -8,16 +8,19 @@ from .paginator import Paginator
 
 class Generator(object):
 
-    def __init__(self, repository, theme):
+    def __init__(self, repository, theme, extra_context=None):
         self.repository = repository
         self.theme = theme
+        self.extra_context = extra_context or {}
         self.template_environment = Environment(
             loader=FileSystemLoader(os.path.join(theme, 'templates')),
         )
 
     def _render_template(self, name, context):
         template = self.template_environment.get_template(name)
-        return template.render(context)
+        template_context = self.extra_context.copy()
+        template_context.update(context)
+        return template.render(template_context)
 
     def render_index(self, page):
         return self._render_template('index.html', {'page': page})
